@@ -313,12 +313,22 @@ section {
 }
 
 .project-card {
-  background: var(--surface); border: 1px solid var(--border);
-  padding: 1.8rem; position: relative; overflow: hidden;
-  transition: border-color 0.2s, transform 0.2s; cursor: pointer;
+  display: block; /* Faz o link ocupar toda a área do card */
+  text-decoration: none; /* Remove sublinhado padrão de links */
+  color: inherit; /* Mantém a cor do texto original do projeto */
+  background: var(--surface); 
+  border: 1px solid var(--border);
+  padding: 1.8rem; 
+  position: relative; 
+  overflow: hidden;
+  transition: border-color 0.2s, transform 0.2s; 
+  cursor: pointer;
 }
 
-.project-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+.project-card:hover { 
+  border-color: var(--accent); 
+  transform: translateY(-3px); 
+}
 .project-card::after {
   content: '↗'; position: absolute; top: 1.2rem; right: 1.2rem;
   font-size: 1.1rem; color: var(--muted); transition: color 0.2s;
