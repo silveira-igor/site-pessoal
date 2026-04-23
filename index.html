@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfólio</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0a0a0a; --surface: #111111; --surface2: #181818;
+    --border: #222222; --accent: #e8ff47; --text: #f0f0f0; --muted: #666666;
+    --mono: 'Space Mono', monospace; --display: 'Syne', sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: var(--display); overflow-x: hidden; }
+
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.2rem 3rem;
+    background: rgba(10,10,10,0.85); backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { font-family: var(--mono); font-size: 13px; color: var(--accent); letter-spacing: 0.1em; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-family: var(--mono); font-size: 12px; color: var(--muted);
+    text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  .hero {
+    min-height: 100vh; display: flex; align-items: center;
+    padding: 8rem 3rem 4rem; position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; top: -200px; right: -200px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(232,255,71,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; width: 100%; max-width: 1100px; }
+  .hero-left { display: flex; flex-direction: column; justify-content: center; }
+  .hero-tag {
+    font-family: var(--mono); font-size: 11px; color: var(--accent);
+    letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .hero-tag::before { content: ''; display: inline-block; width: 20px; height: 1px; background: var(--accent); }
+  h1 { font-size: clamp(2.8rem, 5vw, 4.5rem); font-weight: 800; line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 1.5rem; }
+  h1 .name-line { display: block; }
+  h1 .role-line { display: block; color: var(--muted); font-weight: 400; }
+  .hero-desc { font-family: var(--mono); font-size: 13px; color: var(--muted); line-height: 1.8; max-width: 420px; margin-bottom: 2.5rem; }
+  .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 0.8rem 1.8rem; background: var(--accent); color: #000; border: none; cursor: pointer;
+    font-weight: 700; transition: transform 0.15s; text-decoration: none; display: inline-block;
+  }
+  .btn-primary:hover { transform: translateY(-2px); }
+  .btn-secondary {
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 0.8rem 1.8rem; background: transparent; color: var(--text);
+    border: 1px solid var(--border); cursor: pointer; transition: border-color 0.2s, color 0.2s;
+    text-decoration: none; display: inline-block;
+  }
+  .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+  .hero-right { display: flex; flex-direction: column; justify-content: center; gap: 1rem; }
+  .stat-card {
+    background: var(--surface); border: 1px solid var(--border); padding: 1.5rem;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .stat-label { font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+  .stat-value { font-size: 2rem; font-weight: 800; color: var(--accent); letter-spacing: -0.03em; }
+  .availability-dot {
+    display: inline-block; width: 8px; height: 8px; background: #4ade80;
+    border-radius: 50%; animation: pulse 2s infinite; margin-right: 0.5rem;
+  }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+  section { padding: 6rem 3rem; max-width: 1100px; margin: 0 auto; }
+  .section-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 3.5rem; }
+  .section-num { font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.15em; }
+  .section-title { font-size: 2rem; font-weight: 800; letter-spacing: -0.02em; }
+  .section-line { flex: 1; height: 1px; background: var(--border); margin-left: 1rem; }
+
+  /* SKILLS */
+  .skills-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  /* Bolhas: contêiner com altura fixa e overflow hidden para não vazar */
+  .bubbles-col {}
+  .bubbles-label {
+    font-family: var(--mono); font-size: 11px; color: var(--muted);
+    margin-bottom: 1.2rem; letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  .bubbles-container {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+  }
+  .bubble {
+    position: absolute; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-weight: 700; color: #000;
+    cursor: default; transition: transform 0.2s;
+    text-align: center; line-height: 1.2;
+  }
+  .bubble:hover { transform: scale(1.08); z-index: 10; }
+  .bubble.xl { width: 100px; height: 100px; font-size: 11px; background: var(--accent); }
+  .bubble.lg { width: 80px; height: 80px; font-size: 10px; background: #c8ef00; }
+  .bubble.md { width: 64px; height: 64px; font-size: 9px; background: #a8cf00; color: #111; }
+  .bubble.sm { width: 48px; height: 48px; font-size: 8px; background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
+
+  /* Lista de skills */
+  .skills-list-col {}
+  .skills-list { display: flex; flex-direction: column; }
+  .skill-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    padding: 0.65rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .skill-row:last-child { border-bottom: none; }
+  .skill-name { font-family: var(--mono); font-size: 12px; color: var(--text); }
+  .skill-level {
+    font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.05em;
+  }
+  .skill-level.basico    { color: #555; }
+  .skill-level.inter     { color: #999; }
+  .skill-level.avancado  { color: var(--accent); }
+
+  /* PORTFOLIO */
+  .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
+  .project-card {
+    background: var(--surface); border: 1px solid var(--border);
+    padding: 1.8rem; position: relative; overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s; cursor: pointer;
+  }
+  .project-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+  .project-card::after {
+    content: '↗'; position: absolute; top: 1.2rem; right: 1.2rem;
+    font-size: 1.1rem; color: var(--muted); transition: color 0.2s;
+  }
+  .project-card:hover::after { color: var(--accent); }
+  .project-tag { font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em; color: var(--accent); text-transform: uppercase; margin-bottom: 0.8rem; }
+  .project-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.7rem; letter-spacing: -0.02em; }
+  .project-desc { font-family: var(--mono); font-size: 12px; color: var(--muted); line-height: 1.7; margin-bottom: 1.2rem; }
+  .project-stack { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .tag { font-family: var(--mono); font-size: 10px; padding: 3px 8px; background: var(--surface2); border: 1px solid var(--border); color: var(--muted); }
+
+  /* SOBRE */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+  .about-text p { font-family: var(--mono); font-size: 13px; color: var(--muted); line-height: 1.9; margin-bottom: 1rem; }
+  .about-text p strong { color: var(--text); font-weight: 700; }
+  .timeline { display: flex; flex-direction: column; gap: 1.5rem; }
+  .timeline-item {
+    display: flex; gap: 1.5rem; padding-left: 1rem;
+    border-left: 2px solid var(--border); position: relative;
+  }
+  .timeline-item::before {
+    content: ''; position: absolute; left: -5px; top: 4px;
+    width: 8px; height: 8px; background: var(--accent); border-radius: 50%;
+  }
+  .timeline-year { font-family: var(--mono); font-size: 11px; color: var(--accent); min-width: 40px; margin-top: 2px; }
+  .timeline-role { font-weight: 700; font-size: 14px; margin-bottom: 3px; }
+  .timeline-company { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+
+  /* CONTATO */
+  .contact-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+  .contact-headline { font-size: 2.5rem; font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; }
+  .contact-headline span { color: var(--accent); }
+  .contact-links { display: flex; flex-direction: column; gap: 1rem; }
+  .contact-link {
+    display: flex; align-items: center; gap: 1rem; padding: 1rem 1.2rem;
+    background: var(--surface); border: 1px solid var(--border);
+    text-decoration: none; color: var(--text); font-family: var(--mono); font-size: 12px;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .contact-link:hover { border-color: var(--accent); background: var(--surface2); }
+  .contact-link-icon { color: var(--accent); font-size: 1rem; }
+  .contact-link-label { flex: 1; }
+  .contact-link-arrow { color: var(--muted); }
+
+  footer {
+    border-top: 1px solid var(--border); padding: 2rem 3rem;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  footer p { font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 0.05em; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">// IGOR_SILVEIRA.DEV</div>
+  <ul class="nav-links">
+    <li><a href="#sobre">sobre</a></li>
+    <li><a href="#skills">skills</a></li>
+    <li><a href="#portfolio">portfólio</a></li>
+    <li><a href="#contato">contato</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-grid">
+    <div class="hero-left">
+      <div class="hero-tag">disponível para novos projetos</div>
+      <h1>
+        <span class="name-line">Igor Silveira</span>
+        <span class="role-line">Desenvolvedor<br>Full Stack</span>
+      </h1>
+      <p class="hero-desc">Construo interfaces e sistemas que unem lógica sólida com experiência de usuário bem pensada. Do banco de dados ao pixel.</p>
+      <div class="hero-cta">
+        <a href="#portfolio" class="btn-primary">Ver projetos</a>
+        <a href="#contato" class="btn-secondary">Entrar em contato</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="stat-card">
+        <div><div class="stat-label">Projetos desenvolvidos</div></div>
+        <div class="stat-value">5+</div>
+      </div>
+      <div class="stat-card">
+        <div><div class="stat-label">Anos de estudo</div></div>
+        <div class="stat-value">3+</div>
+      </div>
+      <div class="stat-card">
+        <div>
+          <div class="stat-label" style="display:flex;align-items:center">
+            <span class="availability-dot"></span>Status atual
+          </div>
+          <div style="font-family:var(--mono);font-size:12px;color:#4ade80;margin-top:4px">Aberto a oportunidades</div>
+        </div>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--muted)">Rio de Janeiro e adjacências</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SOBRE -->
+<section id="sobre" style="border-top:1px solid var(--border)">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2 class="section-title">Sobre mim</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>Olá! Sou <strong>Igor de Souza da Silveira</strong>, desenvolvedor baseado em <strong>Niterói, RJ</strong>. Sou estudante do curso de Sistemas de Informação do Centro Universitário Unilasalle-RJ, sediado na cidade de Niterói.</p>
+      <p>Gosto de projetos que envolvem tanto o front quanto o back — entender o sistema como um todo me dá perspectiva melhor para tomar decisões de arquitetura.</p>
+      <p>Quando não estou codando, estou aprendendo novas ferramentas e conceitos através de cursos online. Sempre aberto a trocar uma ideia sobre tecnologia, projetos open source ou oportunidades de colaboração.</p>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <span class="timeline-year">2023-Hoje</span>
+        <div class="timeline-content">
+          <div class="timeline-role">Estudante do curso de Sistemas de Informação</div>
+          <div class="timeline-company">Unilasalle-RJ · Niterói, RJ</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" style="border-top:1px solid var(--border)">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <h2 class="section-title">Skills & Tecnologias</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="skills-wrap">
+
+    <!-- COLUNA BOLHAS -->
+    <div class="bubbles-col">
+      <p class="bubbles-label">Visão geral — tamanho = domínio</p>
+      <div class="bubbles-container">
+        <div class="bubble xl" style="left:5px;top:10px">React</div>
+        <div class="bubble xl" style="left:105px;top:85px">Python</div>
+        <div class="bubble lg" style="left:200px;top:5px">Node.js</div>
+        <div class="bubble lg" style="left:205px;top:155px">SQL</div>
+        <div class="bubble md" style="left:5px;top:170px">TypeScript</div>
+        <div class="bubble md" style="left:90px;top:230px">Docker</div>
+        <div class="bubble md" style="left:275px;top:90px">AWS</div>
+        <div class="bubble sm" style="left:290px;top:215px">Git</div>
+        <div class="bubble sm" style="left:185px;top:250px">Linux</div>
+        <div class="bubble sm" style="left:5px;top:255px">REST</div>
+      </div>
+    </div>
+
+    <!-- COLUNA LISTA -->
+    <div class="skills-list-col">
+      <p class="bubbles-label">Detalhado por nível</p>
+      <div class="skills-list">
+        <div class="skill-row">
+          <span class="skill-name">React</span>
+          <span class="skill-level avancado">Avançado</span>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">Python</span>
+          <span class="skill-level avancado">Avançado</span>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">Node.js</span>
+          <span class="skill-level avancado">Avançado</span>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">SQL</span>
+          <span class="skill-level inter">Intermediário</span>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">TypeScript</span>
+          <span class="skill-level inter">Intermediário</span>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">Docker</span>
+          <span class="skill-level inter">Intermediário</span>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">AWS</span>
+          <span class="skill-level inter">Intermediário</span>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">Git</span>
+          <span class="skill-level avancado">Avançado</span>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">Linux</span>
+          <span class="skill-level basico">Básico</span>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">REST APIs</span>
+          <span class="skill-level inter">Intermediário</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio" style="border-top:1px solid var(--border)">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2 class="section-title">Portfólio</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="portfolio-grid">
+    <div class="project-card">
+      <div class="project-tag">Web App</div>
+      <div class="project-title">Nome do Projeto 01</div>
+      <p class="project-desc">Breve descrição do que o projeto faz, o problema que resolve e o impacto que gera.</p>
+      <div class="project-stack">
+        <span class="tag">React</span><span class="tag">Node.js</span><span class="tag">PostgreSQL</span>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-tag">API</div>
+      <div class="project-title">Nome do Projeto 02</div>
+      <p class="project-desc">Breve descrição do que o projeto faz, o problema que resolve e o impacto que gera.</p>
+      <div class="project-stack">
+        <span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">Docker</span>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-tag">Data</div>
+      <div class="project-title">Nome do Projeto 03</div>
+      <p class="project-desc">Breve descrição do que o projeto faz, o problema que resolve e o impacto que gera.</p>
+      <div class="project-stack">
+        <span class="tag">Python</span><span class="tag">SQL</span><span class="tag">Power BI</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section id="contato" style="border-top:1px solid var(--border)">
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <h2 class="section-title">Contato</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="contact-wrap">
+    <div>
+      <div class="contact-headline">Vamos<br>construir algo<br><span>juntos?</span></div>
+    </div>
+    <div class="contact-links">
+      <a href="mailto:seu@email.com" class="contact-link">
+        <span class="contact-link-icon">✉</span>
+        <span class="contact-link-label">seu@email.com</span>
+        <span class="contact-link-arrow">→</span>
+      </a>
+      <a href="https://linkedin.com/in/seuperfil" class="contact-link">
+        <span class="contact-link-icon">in</span>
+        <span class="contact-link-label">linkedin.com/in/seuperfil</span>
+        <span class="contact-link-arrow">→</span>
+      </a>
+      <a href="https://github.com/seuuser" class="contact-link">
+        <span class="contact-link-icon">gh</span>
+        <span class="contact-link-label">github.com/seuuser</span>
+        <span class="contact-link-arrow">→</span>
+      </a>
+      <a href="#" class="contact-link">
+        <span class="contact-link-icon">↓</span>
+        <span class="contact-link-label">Download CV</span>
+        <span class="contact-link-arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 Seu Nome. Feito com obsessão pelos detalhes.</p>
+  <p>Niterói, Rio de Janeiro, BR</p>
+</footer>
+
+</body>
+</html>
