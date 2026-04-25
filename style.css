@@ -1,5 +1,5 @@
-/* ==========================================================================
-   VARIÁVEIS E RESET GLOBAL
+﻿/* ==========================================================================
+   VARIAVEIS E RESET GLOBAL
    ========================================================================== */
 *,
 *::before,
@@ -32,9 +32,6 @@ body {
     overflow-x: hidden;
 }
 
-/* ==========================================================================
-   NAVEGAÇÃO
-   ========================================================================== */
 nav {
     position: fixed;
     top: 0;
@@ -77,7 +74,6 @@ nav {
     color: var(--accent);
 }
 
-/* Botão do Menu Mobile (Escondido no Desktop) */
 .mobile-menu-btn {
     display: none;
     background: none;
@@ -95,9 +91,6 @@ nav {
     transition: all 0.3s ease;
 }
 
-/* ==========================================================================
-   HERO SECTION
-   ========================================================================== */
 .hero {
     min-height: 100vh;
     display: flex;
@@ -180,7 +173,6 @@ h1 .focus-line {
     letter-spacing: 0;
     margin-top: 0.35rem;
 }
-
 
 .hero-desc {
     font-family: var(--mono);
@@ -298,7 +290,6 @@ h1 .focus-line {
 }
 
 @keyframes pulse {
-
     0%,
     100% {
         opacity: 1;
@@ -309,9 +300,6 @@ h1 .focus-line {
     }
 }
 
-/* ==========================================================================
-   ESTRUTURA DAS SEÇÕES
-   ========================================================================== */
 section {
     padding: 6rem 3rem;
     max-width: 1100px;
@@ -346,9 +334,6 @@ section {
     margin-left: 1rem;
 }
 
-/* ==========================================================================
-   SOBRE
-   ========================================================================== */
 .about-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -414,9 +399,6 @@ section {
     color: var(--muted);
 }
 
-/* ==========================================================================
-   SKILLS
-   ========================================================================== */
 .skills-wrap {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -433,7 +415,6 @@ section {
     text-transform: uppercase;
 }
 
-/* Bolhas Responsivas com Flexbox */
 .bubbles-container {
     display: flex;
     flex-wrap: wrap;
@@ -538,23 +519,57 @@ section {
     color: var(--accent);
 }
 
+.portfolio-group + .portfolio-group {
+    margin-top: 4rem;
+}
 
-/* ==========================================================================
-   PORTFOLIO
-   ========================================================================== */
+.portfolio-group-alt {
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+}
+
+.portfolio-group-header {
+    margin-bottom: 1.8rem;
+}
+
+.portfolio-group-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
+.portfolio-group-title {
+    margin-top: 0.7rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.portfolio-group-desc {
+    margin-top: 0.7rem;
+    max-width: 700px;
+    font-family: var(--mono);
+    font-size: 12px;
+    line-height: 1.8;
+    color: var(--muted);
+}
+
 .portfolio-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 1.5rem;
 }
 
+.portfolio-grid-single {
+    grid-template-columns: minmax(300px, 1fr);
+}
+
 .project-card {
     display: block;
-    /* Faz o link ocupar toda a área do card */
     text-decoration: none;
-    /* Remove sublinhado padrão de links */
     color: inherit;
-    /* Mantém a cor do texto original do projeto */
     background: var(--surface);
     border: 1px solid var(--border);
     padding: 1.8rem;
@@ -622,9 +637,6 @@ section {
     color: var(--muted);
 }
 
-/* ==========================================================================
-   CONTATO E FOOTER
-   ========================================================================== */
 .contact-wrap {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -681,9 +693,6 @@ section {
     color: var(--muted);
 }
 
-/* ==========================================================================
-   BOTÕES DO CURRÍCULO (DIVISÃO MEIO A MEIO)
-   ========================================================================== */
 .cv-buttons-wrap {
     display: flex;
     gap: 1rem;
@@ -692,7 +701,6 @@ section {
 
 .cv-link {
     flex: 1;
-    /* Faz as duas caixas ocuparem metades iguais do espaço */
 }
 
 footer {
@@ -712,13 +720,7 @@ footer p {
     letter-spacing: 0.05em;
 }
 
-/* ==========================================================================
-   RESPONSIVIDADE (MEDIA QUERIES)
-   ========================================================================== */
-
-/* Tablets em diante (Max 900px) */
 @media (max-width: 900px) {
-
     .hero-grid,
     .about-grid,
     .skills-wrap,
@@ -736,13 +738,11 @@ footer p {
     }
 }
 
-/* Celulares (Max 768px) */
 @media (max-width: 768px) {
     nav {
         padding: 1rem 2rem;
     }
 
-    /* Menu Mobile Ativação */
     .mobile-menu-btn {
         display: flex;
     }
@@ -764,7 +764,6 @@ footer p {
 
     .nav-links.active {
         max-height: 300px;
-        /* Suficiente para os links */
         border-bottom: 1px solid var(--border);
     }
 
@@ -778,7 +777,6 @@ footer p {
         padding: 1.5rem;
     }
 
-    /* Ajustes Gerais para Celular */
     .stat-card {
         flex-direction: column;
         align-items: flex-start;
@@ -789,21 +787,18 @@ footer p {
         text-align: left;
     }
 
-    .portfolio-grid {
+    .portfolio-grid,
+    .portfolio-grid-single {
         grid-template-columns: 1fr;
     }
 
     .cv-buttons-wrap {
         flex-direction: column;
-        /* Empilha os botões no celular */
     }
-
 
     footer {
         flex-direction: column;
         text-align: center;
         padding: 2rem;
     }
-
-
 }
