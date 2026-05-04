@@ -598,6 +598,23 @@ section {
     color: var(--accent);
 }
 
+.project-card-soon {
+    cursor: default;
+}
+
+.project-card-soon::after {
+    content: '...';
+}
+
+.project-card-soon:hover {
+    border-color: var(--border);
+    transform: none;
+}
+
+.project-card-soon:hover::after {
+    color: var(--muted);
+}
+
 .project-tag {
     font-family: var(--mono);
     font-size: 10px;
